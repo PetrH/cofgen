@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<device_list>
+	<device name="sw-a">
+		<ip>10.0.0.10</ip>
+		<ports>
+			<FastEthernet>24</FastEthernet>
+			<GigabitEthernet>2</GigabitEthernet>
+		</ports>
+		<int name="FastEthernet0/1-20">
+			<desc>Users</desc>
+			<type>access</type>
+			<vlan>10</vlan>
+		</int>
+		<int name="FastEthernet0/21-24">
+			<type>unused</type>
+		</int>
+		<int name="GigabitEthernet0/1">
+			<desc>core-1</desc>
+			<type>trunk</type>
+			<allowed_vlan>10,20,30,40,100</allowed_vlan>
+		</int>
+		<int name="GigabitEthernet0/2">
+			<type>unused</type>
+		</int>
+	</device>
+	<device name="sw-b">
+		<ip>10.0.0.11</ip>
+		<ports>
+			<FastEthernet>24</FastEthernet>
+			<GigabitEthernet>2</GigabitEthernet>
+		</ports>
+		<int name="FastEthernet0/1-20">
+			<desc>Administrators</desc>
+			<type>access</type>
+			<vlan>20</vlan>
+		</int>
+		<int name="FastEthernet0/21-24">
+			<type>unused</type>
+		</int>
+		<int name="GigabitEthernet0/1">
+			<desc>core-1</desc>
+			<type>trunk</type>
+			<allowed_vlan>10,20,30,40,100</allowed_vlan>
+		</int>
+		<int name="GigabitEthernet0/2">
+			<type>unused</type>
+		</int>
+	</device>
+</device_list>

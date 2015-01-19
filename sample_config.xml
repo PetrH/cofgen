@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<device type="access">
+		<start>
+service password-encryption
+!
+hostname :HOSTNAME:
+!
+enable secret XXXyyyZZZ
+!
+username root secret xxxYYYzzz
+username root privillage 15
+no aaa new-model
+clock timezone CET 1 0
+clock summer-time CEST recurring last Sun Mar 2:00 last Sun Oct 3:00
+!
+!
+ip dhcp snooping vlan :INSPETCT_VLAN:
+ip dhcp snooping
+ip domain-name example.org
+ip name-server 1.2.3.4
+ip arp inspection vlan :INSPETCT_VLAN:
+!
+ip ssh version 2
+ip scp server enable
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+		</start>
+		<end>
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan100
+ ip address :MGMT_IP: 255.255.255.0
+!
+ip default-gateway 10.0.0.1
+no ip http server
+no ip http secure-server
+banner motd "Pouze pro adminy site LanCraft!"
+!
+line con 0
+ exec-timeout 60 0
+ logging synchronous
+ login
+line vty 0 15
+ exec-timeout 60 0
+ logging synchronous
+ login local
+ transport input both
+!
+end	
+		</end>
+	</device>
+	<port type="access">
+interface :INT:
+ description :DESC:
+ switchport access vlan :ACC_VLAN:
+ switchport mode access
+ spanning-tree portfast
+ no cdp enable
+ ip verify source
+	</port>
+	<port type="trunk">
+interface :INT:
+ description :DESC:
+ switchport trunk allowed vlan :ALLOWED_VLAN:
+ switchport mode trunk
+ ip arp inspection trust
+ switchport nonegotiate
+ ip dhcp snooping trust
+	</port>
+	<port type="unused">
+interface :INT:
+ description Unused
+ switchport access vlan 999
+ switchport mode access
+ switchport nonegotiate
+ shutdown
+	</port>
+</config>
